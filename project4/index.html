@@ -1,0 +1,52 @@
+<html>
+<head>
+
+	<title> App 4 by Mahadev </title>
+	<style>
+
+		* { font-size:40px; }
+		body {background-color: yellow ;}
+		h1 {border: solid ; width : 50%; border-radius:40px;}
+
+	</style>
+	<script>
+
+		function convert()
+		{
+		event.preventDefault();
+		let aid = document.getElementById("aid");
+		let ans = document.getElementById("ans");
+		let url = "https://api.exchangerate-api.com/v4/latest/USD";
+
+		fetch(url)
+		.then(res => res.json())
+		.then(data=> {
+			let dollar =data["rates"]["INR"];
+			let amt_in_dollar = parseFloat(aid.value);
+			let amt_in_rupees = amt_in_dollar * dollar;
+			let msg ="\u20b9" + amt_in_rupees.toFixed(2);
+			ans.innerHTML=msg
+		})
+		.catch(err => ans.innerHTML = "issue " + err);
+		}
+
+	</script>
+
+</head>
+
+<body>
+<center>
+
+	<h1> Live Currency Converter  </h1>
+	<form onsubmit="convert()"> 
+	<input type="number" step ="any" palceholder ="enter amt in $$" id="aid"/>  
+	<br><br>
+	<input type ="submit" value="Convert"/>
+	</form>
+
+	<h1 id="ans" />
+
+</center>
+</body>
+</html>
+
